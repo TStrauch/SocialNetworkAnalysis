@@ -1,7 +1,5 @@
 package graph;
 
-import edu.uci.ics.jung.graph.DirectedSparseGraph;
-import graph.model.UserEdgeArc;
 import graph.model.UserVertex;
 
 import java.io.BufferedWriter;
@@ -24,7 +22,7 @@ public class Builder {
         /**
          *
          *
-         * extract metrics for venue graph
+         * extract venue graph to pajek
          */
 
         VenuesData.readVenues("data/input/venues_labeled_checkins2.csv");
@@ -37,18 +35,18 @@ public class Builder {
         SocialgraphUserCheckinVenue.createFirstCheckinPerVenueMap("data/input/checkins_filtered2_labeled.csv", true);
         System.out.println("[Builder] First Checkin per Venue Map created.");
 
-        saveUserCheckinVenueGraph("11373",socialgraph);
-//        saveUserCheckinVenueGraph("396509",socialgraph);
-//        saveUserCheckinVenueGraph("54363",socialgraph);
-//        saveUserCheckinVenueGraph("103165",socialgraph);
-//        saveUserCheckinVenueGraph("42502",socialgraph);
+        saveUserCheckinVenueGraphToPajek("11373",socialgraph);
+//        saveUserCheckinVenueGraphToPajek("396509",socialgraph);
+//        saveUserCheckinVenueGraphToPajek("54363",socialgraph);
+//        saveUserCheckinVenueGraphToPajek("103165",socialgraph);
+//        saveUserCheckinVenueGraphToPajek("42502",socialgraph);
 
 
         /**
          *
          *
          *
-         * calculate scores for the vertices in the interesting networks
+         * calculate scores for the vertices in the interesting networks and export them in a file
          */
 
         List<String> venueids = new ArrayList<String>();
@@ -123,7 +121,7 @@ public class Builder {
 
     }
 
-    public static void saveUserCheckinVenueGraph(String venueid, Socialgraph socialgraph) throws IOException {
+    public static void saveUserCheckinVenueGraphToPajek(String venueid, Socialgraph socialgraph) throws IOException {
         SocialgraphUserCheckinVenue socialgraphUserCheckinVenue = new SocialgraphUserCheckinVenue(socialgraph, venueid);
         socialgraphUserCheckinVenue.savePajekNetworkFile("data/outputPaj/network_checkins_"+venueid+".net");
         socialgraphUserCheckinVenue.savePajekClusterFile("data/outputPaj/cluster_checkins_"+venueid+".clu");
